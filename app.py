@@ -25,7 +25,7 @@ def chest_sickness_predict(image):
         img1.save(img2)
 
     img = cv2.imread(img2)
-    chest_sickness_model = load_model('model/medical_trial_model.h5')
+    chest_sickness_model = load_model('medical_trial_model.h5')
     print('X-Ray Model->', chest_sickness_model)
     test_image = cv2.resize(img,(224,224))
     test_image = np.array(test_image)
