@@ -12,7 +12,7 @@ def load_image(image_file):
     return img 
 
 
-def chest_cancer_predict(image):
+def chest_sickness_predict(image):
     if "png" in str(image):
         im = Image.open(image)
         rgb_im = im.convert('RGB')
@@ -25,13 +25,13 @@ def chest_cancer_predict(image):
         img1.save(img2)
 
     img = cv2.imread(img2)
-    chest_cancer_model = load_model('model/medical_trial_model.h5')
-    print('X-Ray Model->', chest_cancer_model)
+    chest_sickness_model = load_model('model/medical_trial_model.h5')
+    print('X-Ray Model->', chest_sickness_model)
     test_image = cv2.resize(img,(224,224))
     test_image = np.array(test_image)
     test_image = np.expand_dims(test_image, axis= 0)
     test_image = test_image/255
-    result = chest_cancer_model.predict(test_image)
+    result = chest_sickness_model.predict(test_image)
 
     if result[0][0] > 0.8:
         print(result[0][0])
@@ -57,25 +57,35 @@ def chest_cancer_predict(image):
 
 
 def main():
-    st.title('***CT X-Rays Predictions**')
-    html_temp = """"
-    <div style="background-color:red;padding;10px">
+    st.title('**CT X-Rays Predictions**')
+    html_temp = """
+    <div style="background-color:red;padding;10px; text-align:center">
     <h2>Predicción de Pulmon</h2>
     """
     st.markdown(html_temp, unsafe_allow_html = True)
-    filename = st.file_uploader("SUBE LA IMAGEN CT", type=['jpg', 'png'])
+    filename = st.file_uploader("SUBE LA IMAGEN CT", type=['jpg', 'png','jpeg','gif'])
 
     if ((filename is not None) and ('jpg' in str(filename))):
         st.image(load_image(filename))
-        prediction, confidence_score = chest_cancer_predict(filename)
+        prediction, confidence_score = chest_sickness_predict(filename)
         confidence_score = str(confidence_score)
         
 
     elif ((filename is not None) and ('png' in str(filename))):
         st.image(load_image(filename))
-        prediction, confidence_score = chest_cancer_predict(filename)
+        prediction, confidence_score = chest_sickness_predict(filename)
         confidence_score = str(confidence_score)
-        
+    
+
+    elif ((filename is not None) and ('jpeg' in str(filename))):
+        st.image(load_image(filename))
+        prediction, confidence_score = chest_sickness_predict(filename)
+        confidence_score = str(confidence_score)
+
+    elif ((filename is not None) and ('gif' in str(filename))):
+        st.image(load_image(filename))
+        prediction, confidence_score = chest_sickness_predict(filename)
+        confidence_score = str(confidence_score)
 
     else:
         pass
@@ -91,9 +101,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-    
-    
-
