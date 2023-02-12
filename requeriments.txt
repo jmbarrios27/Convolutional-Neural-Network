@@ -3,5 +3,4 @@ numpy==1.21.4
 opencv_python==4.7.0.68
 Pillow==9.4.0
 streamlit==1.1.0
-opencv-contrib-python==4.7.0.68
-opencv-python==4.7.0.68
+opencv-python==4.6.0.66
